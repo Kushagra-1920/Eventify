@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/* Tell Tailwind v4 to use .dark class on <html> instead of prefers-color-scheme */
+@variant dark (&:where(.dark, .dark *));
+
+@keyframes growWidth {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  0% { transform: translateX(50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInLeft {
+  0% { transform: translateX(-50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.animate-slide-right {
+  animation: slideInRight 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.animate-slide-left {
+  animation: slideInLeft 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0px); }
+}
+.animate-page-enter {
+  animation: pageEnter 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@theme {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-secondary: #f43f5e;
+}
+
+/* Base dark mode handled via dark: variants in components */
+body {
+  @apply antialiased;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Smooth dark/light transitions */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Override transitions for elements that shouldn't transition (images etc) */
+img, video, svg, canvas, [class*="animate-"], [class*="transition-"] {
+  transition-property: none;
+}
+
+/* Globally hide scrollbars while maintaining scroll functionality */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
