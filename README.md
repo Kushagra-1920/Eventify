@@ -1,6 +1,7 @@
 # Event Ticket Booking System
 
 A production-ready full-stack Event Ticket Booking System showcasing clean layered architecture and concurrent seat locking (Optimistic Locking).
+live link: https://eventify-five-lilac.vercel.app/
 
 ## 🚀 Features
 
