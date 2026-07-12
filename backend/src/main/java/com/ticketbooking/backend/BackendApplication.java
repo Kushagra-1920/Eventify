@@ -3,7 +3,6 @@ package com.ticketbooking.backend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import java.net.URI;
 
 @SpringBootApplication
 @EnableScheduling
@@ -23,12 +22,11 @@ public class BackendApplication {
                 mysqlUrl = mysqlUrl.replace("\"", "").replace("'", "");
                 
                 if (mysqlUrl.startsWith("mysql://")) {
-                    URI uri = new URI(mysqlUrl);
-                    String host = uri.getHost();
-                    int port = uri.getPort() == -1 ? 3306 : uri.getPort();
-                    String path = uri.getPath(); // e.g. /railway
+                    String withoutScheme = mysqlUrl.substring("mysql://".length());
+                    int atIndex = withoutScheme.lastIndexOf('@');
+                    String hostPortDb = atIndex != -1 ? withoutScheme.substring(atIndex + 1) : withoutScheme;
                     
-                    String jdbcUrl = "jdbc:mysql://" + host + ":" + port + path + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+                    String jdbcUrl = "jdbc:mysql://" + hostPortDb + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
                     System.setProperty("spring.datasource.url", jdbcUrl);
                     System.out.println("DEBUG: Auto-corrected MYSQL_URL into JDBC format: " + jdbcUrl);
                 } else {
