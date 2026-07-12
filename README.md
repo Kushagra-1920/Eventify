@@ -81,3 +81,24 @@ We chose **Optimistic Locking** (`@Version`) over Pessimistic Locking (`@Lock`) 
 1. **Throughput**: Optimistic locking does not hold actual database row locks during user think-time (while the user is looking at the checkout page). 
 2. **Scalability**: Pessimistic locks limit horizontal scaling and can cause connection pool exhaustion or deadlocks during high traffic spikes.
 3. **Write Conflicts**: While many users might view the same event, collisions (two users selecting the *exact* same seat at the *exact* same millisecond) are infrequent relative to read volume. 
+
+## 🚀 Deployment Checklist
+
+This project is strictly configured via environment variables for production deployments. **Do not hardcode secrets.**
+
+### Railway (Backend & MySQL)
+Ensure you set these environment variables in your Railway Project Settings:
+- `MYSQL_URL` / `MYSQLUSER` / `MYSQLPASSWORD` (Injected automatically by Railway MySQL)
+- `SPRING_PROFILES_ACTIVE=prod` (Ensures the backend boots strictly seeking env vars)
+- `JWT_SECRET` (A long random secure string)
+- `GOOGLE_CLIENT_ID` (From Google Cloud Console)
+- `GOOGLE_CLIENT_SECRET` (From Google Cloud Console)
+- `RAZORPAY_KEY_ID` (From Razorpay Dashboard)
+- `RAZORPAY_KEY_SECRET` (From Razorpay Dashboard)
+- `FRONTEND_URL` (e.g. `https://your-frontend.vercel.app`)
+- `ALLOWED_ORIGINS` (e.g. `https://your-frontend.vercel.app`)
+
+### Vercel (Frontend)
+Ensure you set these environment variables in Vercel before deploying:
+- `VITE_API_URL` (e.g. `https://your-backend.up.railway.app/api`)
+- `VITE_RAZORPAY_KEY_ID`
