@@ -36,7 +36,7 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             
             <a 
-              href={`${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'http://localhost:8080'}/oauth2/authorization/google`}
+              href="http://localhost:8080/oauth2/authorization/google"
               className="w-full flex items-center justify-center gap-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold py-3 px-4 rounded-xl hover:bg-slate-50 dark:bg-slate-900 transition-all shadow-sm mb-6"
             >
               <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">

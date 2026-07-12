@@ -151,7 +151,7 @@ const Checkout = () => {
       }
       
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_SUNvosgFmwxxZ3',
+        key: 'rzp_test_SUNvosgFmwxxZ3',
         amount: data.amount,
         currency: data.currency,
         name: 'Eventify Tickets',
