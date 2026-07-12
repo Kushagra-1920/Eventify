@@ -15,22 +15,25 @@ public class BackendApplication {
 
     private static void sanitizeEnvironment() {
         try {
-            // 1. Sanitize MYSQL_URL if present (Railway injects mysql:// but Java needs jdbc:mysql://)
-            String mysqlUrl = System.getenv("MYSQL_URL");
-            if (mysqlUrl != null) {
+            // 1. Sanitize Database URL (Railway might use MYSQL_URL, DATABASE_URL, or user might have set SPRING_DATASOURCE_URL)
+            String dbUrl = System.getenv("SPRING_DATASOURCE_URL");
+            if (dbUrl == null) dbUrl = System.getenv("DATABASE_URL");
+            if (dbUrl == null) dbUrl = System.getenv("MYSQL_URL");
+            
+            if (dbUrl != null) {
                 // Strip accidental quotes the user might have added in the Railway editor
-                mysqlUrl = mysqlUrl.replace("\"", "").replace("'", "");
+                dbUrl = dbUrl.replace("\"", "").replace("'", "");
                 
-                if (mysqlUrl.startsWith("mysql://")) {
-                    String withoutScheme = mysqlUrl.substring("mysql://".length());
+                if (dbUrl.startsWith("mysql://")) {
+                    String withoutScheme = dbUrl.substring("mysql://".length());
                     int atIndex = withoutScheme.lastIndexOf('@');
                     String hostPortDb = atIndex != -1 ? withoutScheme.substring(atIndex + 1) : withoutScheme;
                     
                     String jdbcUrl = "jdbc:mysql://" + hostPortDb + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
                     System.setProperty("spring.datasource.url", jdbcUrl);
-                    System.out.println("DEBUG: Auto-corrected MYSQL_URL into JDBC format: " + jdbcUrl);
+                    System.out.println("DEBUG: Auto-corrected DB URL into JDBC format: " + jdbcUrl);
                 } else {
-                    System.setProperty("spring.datasource.url", mysqlUrl);
+                    System.setProperty("spring.datasource.url", dbUrl);
                 }
             }
 
