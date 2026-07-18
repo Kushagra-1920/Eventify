@@ -99,7 +99,8 @@ const Home = () => {
   if (isLoading) return (
     <div className="flex flex-col items-center justify-center h-80 gap-3">
       <div className="w-11 h-11 rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-primary animate-spin" />
-      <p className="text-sm font-semibold text-slate-400 animate-pulse">Loading events…</p>
+      <p className="text-sm font-semibold text-slate-400 animate-pulse">  Loading events...</p>
+      <p className="text-sm mt-2 font-semibold text-slate-400 animate-pulse">  Our backend server is currently waking up (free hosting), so this may take 20–60 seconds.</p>
     </div>
   );
 
